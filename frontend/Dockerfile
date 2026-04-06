@@ -3,7 +3,7 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 
-ARG REACT_APP_API_URL=http://localhost:8080
+ARG REACT_APP_API_URL=https://portfolio-1-dfm8.onrender.com/contact/send-email
 ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 
 COPY package.json package-lock.json ./

@@ -19,7 +19,7 @@ const Contact = () => {
   const [showAnimation, setShowAnimation] = useState(false);
   const [animationType, setAnimationType] = useState("success");
 
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+  const API_URL = process.env.REACT_APP_API_URL || "https://portfolio-1-dfm8.onrender.com/contact/send-email";
   const { sectionRef, sectionStyle } = useSectionParallax(22);
 
   const handleInputChange = (event) => {
