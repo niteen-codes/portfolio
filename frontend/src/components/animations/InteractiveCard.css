@@ -1,0 +1,29 @@
+.interactive-card {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.interactive-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.interactive-card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    280px circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
+    rgba(108, 99, 255, 0.18),
+    rgba(0, 212, 255, 0.08) 35%,
+    transparent 70%
+  );
+}
+
+.interactive-card:hover .interactive-card-glow {
+  opacity: 1;
+}

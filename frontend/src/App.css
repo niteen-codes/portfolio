@@ -1,0 +1,56 @@
+/* ===== App Layout ===== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-primary);
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  isolation: isolate;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-hidden {
+  opacity: 0;
+  transform: scale(0.98) translateY(10px);
+}
+
+.app-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.content {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+}
+
+/* ===== Section separation ===== */
+section {
+  position: relative;
+}
+
+section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+  pointer-events: none;
+}
+
+/* Skip the divider on the hero */
+.hero-section::before {
+  display: none;
+}
