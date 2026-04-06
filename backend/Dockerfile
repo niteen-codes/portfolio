@@ -1,14 +1,25 @@
-# Use an official OpenJDK runtime as a parent image
-FROM eclipse-temurin:17-jdk-jammy
+# syntax=docker/dockerfile:1
 
-# Set the working directory inside the container
+FROM maven:3.9.9-eclipse-temurin-17 AS build
+WORKDIR /workspace
+
+# Copy project metadata first for better layer caching.
+COPY pom.xml .
+RUN mvn -q -DskipTests dependency:go-offline
+
+# Copy source and build.
+COPY src src
+RUN mvn -q -DskipTests clean package
+
+FROM eclipse-temurin:17-jre-jammy AS runtime
 WORKDIR /app
 
-# Copy the application JAR file into the container
-COPY target/com-0.0.1-SNAPSHOT.jar app.jar
+# Create a non-root user for runtime security.
+RUN useradd --create-home --shell /bin/bash springuser
 
-# Expose the port your application runs on
+COPY --from=build /workspace/target/com-0.0.1-SNAPSHOT.jar app.jar
+
 EXPOSE 8080
+USER springuser
 
-# Command to run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]
