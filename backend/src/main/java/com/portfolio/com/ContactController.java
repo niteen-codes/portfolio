@@ -2,7 +2,7 @@ package com.portfolio.com;
 
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = {"http://localhost:3000", "https://my-app-frontend-two.vercel.app"})  // Allow both local dev and deployed frontend
+@CrossOrigin(origins = { "https://portfolio-orcin-xi-44.vercel.app" }) // Allow both local dev and deployed frontend
 @RestController
 @RequestMapping("/contact")
 public class ContactController {
