@@ -17,6 +17,7 @@ const Hero = () => {
     {
       icon: "\u{1F680}",
       title: "Fullstack Development",
+      summary: "End-to-end web products with scalable APIs and polished interfaces.",
       items: [
         "Building responsive website front-end using React, HTML, CSS, Bootstrap",
         "Developing custom and interactive web applications",
@@ -27,6 +28,7 @@ const Hero = () => {
     {
       icon: "\u{1F3A8}",
       title: "UI/UX Design",
+      summary: "Interface systems that blend clarity, accessibility, and visual identity.",
       items: [
         "Designing attractive and responsive user interfaces",
         "Customizing logos, cards, and visual branding",
@@ -36,6 +38,7 @@ const Hero = () => {
     {
       icon: "\u{1F4F1}",
       title: "App Development",
+      summary: "Mobile-first product thinking from wireframes to production features.",
       items: [
         "Creating wireframes, prototypes, and UI/UX designs",
         "Building visually appealing and user-friendly apps",
@@ -45,6 +48,7 @@ const Hero = () => {
     {
       icon: "\u{1F5C4}",
       title: "Database Management",
+      summary: "Reliable data architecture with clean schemas and optimized queries.",
       items: [
         "Designing and implementing database schemas",
         "Writing and optimizing SQL queries and procedures",
@@ -167,6 +171,7 @@ const Hero = () => {
             >
               <div className="service-card-icon">{service.icon}</div>
               <h3>{service.title}</h3>
+              <p className="service-card-summary">{service.summary}</p>
               <ul>
                 {service.items.map((item, itemIndex) => (
                   <li key={itemIndex}>{item}</li>

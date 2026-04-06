@@ -96,9 +96,10 @@ const Education = () => {
               <InteractiveCard className="edu-card" tilt={5} shift={4}>
                 <div className="edu-card-top">
                   <div>
-                    <h3 className="edu-degree">{`\u{1F393} ${education.degree}`}</h3>
-                    <p className="edu-institution">{`\u{1F3EB} ${education.institution}`}</p>
-                    <p className="edu-university">{`\u{1F3DB} ${education.university}`}</p>
+                    <p className="edu-kicker">Academic Program</p>
+                    <h3 className="edu-degree">{education.degree}</h3>
+                    <p className="edu-institution">{education.institution}</p>
+                    <p className="edu-university">{education.university}</p>
                   </div>
                   <span className="edu-year">{education.year}</span>
                 </div>
@@ -121,9 +122,13 @@ const Education = () => {
               tilt={6}
               shift={5}
             >
-              <div className="cert-card-icon">{certification.icon}</div>
-              <h3>{certification.title}</h3>
-              <p className="cert-institution">{certification.institution}</p>
+              <div className="cert-card-head">
+                <div className="cert-card-icon">{certification.icon}</div>
+                <div>
+                  <h3>{certification.title}</h3>
+                  <p className="cert-institution">{certification.institution}</p>
+                </div>
+              </div>
               <p className="cert-duration">{`\u{1F4C5} ${certification.duration}`}</p>
               <p className="cert-description">{certification.description}</p>
               {certification.skills && (
@@ -154,11 +159,13 @@ const Education = () => {
               <h3 className="publication-title">
                 Robot Induced Harm: Exploring Criminal Liability in the Age of Automation
               </h3>
-              <p className="publication-journal">
-                Published in <strong>IRJMETS</strong> (International Research Journal of
-                Modernization in Engineering Technology and Science)
-              </p>
-              <p className="publication-date">{`\u{1F4C5} June 2023`}</p>
+              <div className="publication-meta">
+                <p className="publication-journal">
+                  Published in <strong>IRJMETS</strong> (International Research Journal of
+                  Modernization in Engineering Technology and Science)
+                </p>
+                <p className="publication-date">{`\u{1F4C5} June 2023`}</p>
+              </div>
               <p className="publication-abstract">
                 An interdisciplinary research paper exploring the legal and ethical dimensions of
                 criminal liability when autonomous robots cause harm. It examines current legal

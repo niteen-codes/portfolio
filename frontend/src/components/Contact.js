@@ -185,18 +185,21 @@ const Contact = () => {
               label: "Email",
               href: "mailto:touristdestiantion@gmail.com",
               text: "Get in touch",
+              detail: "touristdestiantion@gmail.com",
             },
             {
               icon: "\u{1F4BC}",
               label: "LinkedIn",
               href: "https://www.linkedin.com/in/niteen-jha-35a594264",
               text: "Connect",
+              detail: "Professional profile",
             },
             {
               icon: "\u{1F419}",
               label: "GitHub",
               href: "https://github.com/niteen-codes",
               text: "Follow",
+              detail: "Open-source and projects",
             },
           ].map((item, index) => (
             <InteractiveCard
@@ -213,6 +216,7 @@ const Contact = () => {
                   {item.text}
                 </a>
               </div>
+              <p className="contact-info-detail">{item.detail}</p>
             </InteractiveCard>
           ))}
         </motion.div>

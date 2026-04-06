@@ -82,10 +82,15 @@ const Experience = () => {
               {...revealLeft(index * 0.1, 32)}
             >
               <InteractiveCard className="timeline-card" tilt={5} shift={4}>
-                <span className="timeline-duration">{`\u{1F4C5} ${experience.duration}`}</span>
+                <div className="timeline-meta-row">
+                  <span className="timeline-duration">{`\u{1F4C5} ${experience.duration}`}</span>
+                  {experience.location && (
+                    <span className="timeline-location-chip">{`\u{1F4CD} ${experience.location}`}</span>
+                  )}
+                </div>
                 <h3 className="timeline-role">{experience.role}</h3>
                 <p className="timeline-company">
-                  {"\u{1F3E2} "}
+                  <span className="timeline-company-icon">{"\u{1F3E2}"}</span>
                   {experience.companyLink !== "#" ? (
                     <a href={experience.companyLink} target="_blank" rel="noopener noreferrer">
                       {experience.company} {"\u{2197}"}
@@ -93,10 +98,8 @@ const Experience = () => {
                   ) : (
                     <span>{experience.company}</span>
                   )}
-                  {experience.location && (
-                    <span className="timeline-location">{`\u{1F4CD} ${experience.location}`}</span>
-                  )}
                 </p>
+                <p className="timeline-highlights-title">Key Contributions</p>
                 <ul className="timeline-highlights">
                   {experience.highlights.map((point, highlightIndex) => (
                     <li key={highlightIndex}>{point}</li>

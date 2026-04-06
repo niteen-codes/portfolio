@@ -5,9 +5,9 @@
   --bg-secondary: #0a0a1a;
   --bg-tertiary: #0f0f2a;
   --bg-card: rgba(15, 15, 42, 0.6);
-  --bg-glass: rgba(255, 255, 255, 0.03);
-  --bg-glass-hover: rgba(255, 255, 255, 0.06);
-  --bg-glass-active: rgba(255, 255, 255, 0.08);
+  --bg-glass: rgba(12, 16, 40, 0.44);
+  --bg-glass-hover: rgba(18, 25, 58, 0.62);
+  --bg-glass-active: rgba(23, 32, 72, 0.72);
 
   --accent-primary: #6C63FF;
   --accent-secondary: #00D4FF;
@@ -21,9 +21,9 @@
   --text-tertiary: rgba(255, 255, 255, 0.4);
   --text-accent: #6C63FF;
 
-  --border-color: rgba(108, 99, 255, 0.12);
-  --border-glow: rgba(108, 99, 255, 0.4);
-  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-color: rgba(130, 150, 255, 0.2);
+  --border-glow: rgba(130, 184, 255, 0.52);
+  --border-subtle: rgba(255, 255, 255, 0.12);
 
   /* Typography */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -54,7 +54,7 @@
   --shadow-glow: 0 0 30px rgba(108, 99, 255, 0.2);
   --shadow-glow-md: 0 0 40px rgba(108, 99, 255, 0.25);
   --shadow-glow-lg: 0 0 60px rgba(108, 99, 255, 0.2);
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(108, 99, 255, 0.05);
+  --shadow-card: 0 16px 38px rgba(2, 6, 23, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
   /* Transitions */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);

@@ -20,6 +20,8 @@ const Projects = () => {
     {
       id: 1,
       title: "MobiChikitsa Healthcare Platform",
+      category: "Healthcare SaaS",
+      year: "2025",
       description:
         "A comprehensive healthcare platform enabling role-based access for patients, doctors, and administrators. Features automated backend workflows, secure REST API integrations with JSON/XML support, and seamless deployment with modular architecture.",
       image: MobiChikitsa,
@@ -29,6 +31,8 @@ const Projects = () => {
     {
       id: 2,
       title: "Pathways Career Guidance System",
+      category: "EdTech Platform",
+      year: "2025",
       description:
         "An intelligent career guidance platform with a recommendation engine that helps students discover personalized career pathways. Includes optimized backend queries, performance-tuned APIs, and robust deployment pipelines with collaborative code review workflows.",
       image: Pathways,
@@ -38,6 +42,8 @@ const Projects = () => {
     {
       id: 3,
       title: "Tourist Destination",
+      category: "Travel Experience",
+      year: "2024",
       description:
         "An initiative aimed at showcasing and promoting specific locations as prime tourist attractions. Highlights unique features, cultural significance, and natural beauty of selected destinations worldwide.",
       image: Travel,
@@ -47,6 +53,8 @@ const Projects = () => {
     {
       id: 4,
       title: "Fashion Factory",
+      category: "E-commerce",
+      year: "2024",
       description:
         "A sleek online platform offering a curated collection of stylish clothing, accessories, and fashion products. Explore the latest trends, premium items, and exclusive designs.",
       image: Fashion,
@@ -56,6 +64,8 @@ const Projects = () => {
     {
       id: 5,
       title: "SellWell",
+      category: "Retail Platform",
+      year: "2024",
       description:
         "An e-commerce platform designed to offer a seamless shopping experience for customers seeking high-quality crockery goods - from elegant dinnerware and tea sets to kitchen essentials.",
       image: Sellwell,
@@ -103,6 +113,10 @@ const Projects = () => {
                 )}
               </div>
               <div className="project-info-3d">
+                <div className="project-meta">
+                  <span className="project-category">{project.category}</span>
+                  <span className="project-year">{project.year}</span>
+                </div>
                 <h3>{project.title}</h3>
                 <p className="project-desc">{project.description}</p>
                 <div className="project-tech-tags">

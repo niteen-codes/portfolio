@@ -18,7 +18,7 @@ const InteractiveCard = ({
 
   return (
     <motion.div
-      className={`${className} ${isInteractive ? "interactive-card" : ""}`.trim()}
+      className={`aurora-card ${className} ${isInteractive ? "interactive-card" : ""}`.trim()}
       style={{ ...motionStyle, ...style }}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}

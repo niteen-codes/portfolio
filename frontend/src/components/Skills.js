@@ -178,11 +178,16 @@ const Skills = () => {
               tilt={6}
               shift={5}
             >
+              <div className="skill-card-meta">
+                <span className="skill-category-chip">{skill.category}</span>
+              </div>
               <div className="skill-logo-wrapper">
                 <img src={skill.logo} alt={skill.name} loading="lazy" />
               </div>
-              <span className="skill-name-3d">{skill.name}</span>
-              <span className="skill-desc">{skill.description}</span>
+              <div className="skill-card-copy">
+                <span className="skill-name-3d">{skill.name}</span>
+                <span className="skill-desc">{skill.description}</span>
+              </div>
             </InteractiveCard>
           ))}
         </motion.div>
