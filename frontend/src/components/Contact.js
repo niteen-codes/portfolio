@@ -7,6 +7,36 @@ import useSectionParallax from "../hooks/useSectionParallax";
 import { MOTION_TIMINGS, revealScale, revealUp } from "../utils/motionPresets";
 import "./Contact.css";
 
+const DEFAULT_LOCAL_API_URL = "http://localhost:8080";
+const DEFAULT_PRODUCTION_API_URL = "https://portfolio-1-dfm8.onrender.com";
+
+const normalizeUrl = (url) => (url ? url.trim().replace(/\/+$/, "") : "");
+
+const resolveContactEndpoint = () => {
+  const configuredUrl = normalizeUrl(
+    process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_URL
+  );
+
+  if (configuredUrl) {
+    if (configuredUrl.endsWith("/contact/send-email")) {
+      return configuredUrl;
+    }
+
+    if (configuredUrl.endsWith("/contact")) {
+      return `${configuredUrl}/send-email`;
+    }
+
+    return `${configuredUrl}/contact/send-email`;
+  }
+
+  const fallbackApiBase =
+    typeof window !== "undefined" && window.location.hostname === "localhost"
+      ? DEFAULT_LOCAL_API_URL
+      : DEFAULT_PRODUCTION_API_URL;
+
+  return `${normalizeUrl(fallbackApiBase)}/contact/send-email`;
+};
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -19,7 +49,7 @@ const Contact = () => {
   const [showAnimation, setShowAnimation] = useState(false);
   const [animationType, setAnimationType] = useState("success");
 
-  const API_URL = process.env.REACT_APP_API_URL || "https://portfolio-1-dfm8.onrender.com";
+  const CONTACT_ENDPOINT = resolveContactEndpoint();
   const { sectionRef, sectionStyle } = useSectionParallax(22);
 
   const handleInputChange = (event) => {
@@ -41,7 +71,7 @@ const Contact = () => {
     setLoading(true);
     setStatus(null);
     try {
-      const response = await fetch(`${API_URL}/contact/send-email`, {
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

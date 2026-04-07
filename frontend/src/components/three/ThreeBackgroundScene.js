@@ -375,14 +375,27 @@ const ThreeBackgroundScene = ({ sectionState, pointerRef, quality }) => {
       <SceneLights pointerRef={pointerRef} theme={theme} reducedMotion={reducedMotion} />
       <AmbientMist theme={theme} sectionProgress={sectionState.progress} reducedMotion={reducedMotion} />
       <WaveGrid
+        key={`wave-${waveSegments}`}
         segments={waveSegments}
         pointerRef={pointerRef}
         theme={theme}
         sectionProgress={sectionState.progress}
         reducedMotion={reducedMotion}
       />
-      <ParticleCloud count={particleCount} pointerRef={pointerRef} theme={theme} reducedMotion={reducedMotion} />
-      <FloatingOrbs count={orbCount} pointerRef={pointerRef} theme={theme} reducedMotion={reducedMotion} />
+      <ParticleCloud
+        key={`particles-${particleCount}`}
+        count={particleCount}
+        pointerRef={pointerRef}
+        theme={theme}
+        reducedMotion={reducedMotion}
+      />
+      <FloatingOrbs
+        key={`orbs-${orbCount}`}
+        count={orbCount}
+        pointerRef={pointerRef}
+        theme={theme}
+        reducedMotion={reducedMotion}
+      />
     </>
   );
 };
