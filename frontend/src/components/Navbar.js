@@ -8,21 +8,39 @@ const Navbar = () => {
     const [activeSection, setActiveSection] = useState('home');
 
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+        const ACTIVE_OFFSET = 180;
 
-            // Detect active section
-            for (const section of [...SECTION_ORDER].reverse()) {
+        const handleScroll = () => {
+            // Detect the section that has crossed the navbar viewport offset.
+            let nextActive = SECTION_IDS.HOME;
+
+            for (const section of SECTION_ORDER) {
                 const el = document.getElementById(section);
-                if (el && window.scrollY >= el.offsetTop - 200) {
-                    setActiveSection(section);
+                if (!el) {
+                    continue;
+                }
+
+                if (el.getBoundingClientRect().top <= ACTIVE_OFFSET) {
+                    nextActive = section;
+                } else {
                     break;
                 }
             }
+
+            setActiveSection((current) => (current === nextActive ? current : nextActive));
+            setScrolled(window.scrollY > 50 || nextActive !== SECTION_IDS.HOME);
         };
 
+        handleScroll();
+        document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
         window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll, { passive: true });
+
+        return () => {
+            document.removeEventListener('scroll', handleScroll, { capture: true });
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleScroll);
+        };
     }, []);
 
     // Lock body scroll when mobile menu is open
@@ -40,6 +58,7 @@ const Navbar = () => {
         if (el) {
             el.scrollIntoView({ behavior: 'smooth' });
         }
+        setActiveSection(sectionId);
         setMobileOpen(false);
     }, []);
 

@@ -104,10 +104,12 @@
   border-radius: 2px;
   transition: transform var(--transition-normal);
   transform-origin: center;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.nav-link-item:hover::after,
 .nav-link-item.active::after {
+  opacity: 1;
   transform: translateX(-50%) scaleX(1);
 }
 
