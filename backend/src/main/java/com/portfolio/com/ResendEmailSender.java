@@ -24,9 +24,9 @@ public class ResendEmailSender {
     private final HttpClient httpClient;
 
     public ResendEmailSender(String apiKey, String fromEmail, String recipientEmail) {
-        this.apiKey = apiKey;
-        this.fromEmail = fromEmail;
-        this.recipientEmail = recipientEmail;
+        this.apiKey = apiKey == null ? "" : apiKey.trim();
+        this.fromEmail = fromEmail == null ? "" : fromEmail.trim();
+        this.recipientEmail = recipientEmail == null ? "" : recipientEmail.trim();
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(15))
                 .build();

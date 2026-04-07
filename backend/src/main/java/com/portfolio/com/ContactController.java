@@ -42,8 +42,12 @@ public class ContactController {
         } catch (IllegalStateException exception) {
             String reason = extractRootCauseMessage(exception);
             logger.error("Contact form email failed for sender {}: {}", request.getEmail(), reason);
+            String clientReason = reason == null ? "Unknown delivery error." : reason;
+            if (clientReason.length() > 240) {
+                clientReason = clientReason.substring(0, 240) + "...";
+            }
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                    .body(Map.of("message", "Email service is temporarily unavailable. Please try again or email me directly at niteenjha190@gmail.com"));
+                    .body(Map.of("message", "Email service is temporarily unavailable: " + clientReason));
         }
     }
 

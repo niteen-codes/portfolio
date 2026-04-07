@@ -103,7 +103,7 @@ const Contact = () => {
         }
 
         if (response.status === 503 && attempt < MAX_RETRIES) {
-          setStatus({ type: "info", text: `Server is waking up… retrying (${attempt + 1}/${MAX_RETRIES})` });
+          setStatus({ type: "info", text: `Server is waking up... retrying (${attempt + 1}/${MAX_RETRIES})` });
           await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
           continue;
         }
@@ -121,12 +121,12 @@ const Contact = () => {
         break;
       } catch (error) {
         if (error.name === "AbortError") {
-          lastError = "Request timed out. The server may be starting up — please try again in a moment.";
+          lastError = "Request timed out. The server may be starting up - please try again in a moment.";
         } else {
           lastError = "An error occurred. Please try again later.";
         }
         if (attempt < MAX_RETRIES) {
-          setStatus({ type: "info", text: `Connecting to server… retrying (${attempt + 1}/${MAX_RETRIES})` });
+          setStatus({ type: "info", text: `Connecting to server... retrying (${attempt + 1}/${MAX_RETRIES})` });
           await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
           continue;
         }
