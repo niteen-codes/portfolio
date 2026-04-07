@@ -61,6 +61,16 @@ const Contact = () => {
     setShowAnimation(false);
   }, []);
 
+  const sendRequest = async (signal) => {
+    const response = await fetch(CONTACT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+      signal,
+    });
+    return response;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!formData.name || !formData.email || !formData.mobile || !formData.message) {
@@ -70,39 +80,64 @@ const Contact = () => {
 
     setLoading(true);
     setStatus(null);
-    try {
-      const response = await fetch(CONTACT_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
 
-      if (response.ok) {
-        setAnimationType("success");
-        setShowAnimation(true);
-        setStatus({ type: "success", text: "Message sent successfully. I will get back to you soon." });
-        setFormData({ name: "", email: "", mobile: "", message: "" });
-      } else {
+    const MAX_RETRIES = 2;
+    const RETRY_DELAY_MS = 3000;
+    let lastError = null;
+
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+        const response = await sendRequest(controller.signal);
+        clearTimeout(timeoutId);
+
+        if (response.ok) {
+          setAnimationType("success");
+          setShowAnimation(true);
+          setStatus({ type: "success", text: "Message sent successfully. I will get back to you soon." });
+          setFormData({ name: "", email: "", mobile: "", message: "" });
+          setLoading(false);
+          return;
+        }
+
+        if (response.status === 503 && attempt < MAX_RETRIES) {
+          setStatus({ type: "info", text: `Server is waking up… retrying (${attempt + 1}/${MAX_RETRIES})` });
+          await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
+          continue;
+        }
+
         let errorMessage = "Failed to send message. Please try again.";
         try {
           const payload = await response.json();
           if (payload?.message) {
             errorMessage = payload.message;
           }
-        } catch (parseError) {
-          // Keep generic fallback when response body is not JSON.
+        } catch (_) {
+          /* response body wasn't JSON */
         }
-        setAnimationType("error");
-        setShowAnimation(true);
-        setStatus({ type: "error", text: errorMessage });
+        lastError = errorMessage;
+        break;
+      } catch (error) {
+        if (error.name === "AbortError") {
+          lastError = "Request timed out. The server may be starting up — please try again in a moment.";
+        } else {
+          lastError = "An error occurred. Please try again later.";
+        }
+        if (attempt < MAX_RETRIES) {
+          setStatus({ type: "info", text: `Connecting to server… retrying (${attempt + 1}/${MAX_RETRIES})` });
+          await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
+          continue;
+        }
+        break;
       }
-    } catch (error) {
-      setAnimationType("error");
-      setShowAnimation(true);
-      setStatus({ type: "error", text: "An error occurred. Please try again later." });
-    } finally {
-      setLoading(false);
     }
+
+    setAnimationType("error");
+    setShowAnimation(true);
+    setStatus({ type: "error", text: lastError });
+    setLoading(false);
   };
 
   return (
