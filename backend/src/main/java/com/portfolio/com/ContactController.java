@@ -34,10 +34,19 @@ public class ContactController {
             emailService.sendEmail(request);
             return ResponseEntity.ok(Map.of("message", "Email sent successfully!"));
         } catch (IllegalStateException exception) {
-            logger.error("Contact form email failed for sender {}: {}", request.getEmail(), exception.getMessage());
+            String reason = extractRootCauseMessage(exception);
+            logger.error("Contact form email failed for sender {}: {}", request.getEmail(), reason);
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                    .body(Map.of("message", "Email service is temporarily unavailable. Please try again shortly."));
+                    .body(Map.of("message", "Email service is temporarily unavailable: " + reason));
         }
+    }
+
+    private String extractRootCauseMessage(Throwable throwable) {
+        Throwable current = throwable;
+        while (current.getCause() != null) {
+            current = current.getCause();
+        }
+        return current.getMessage() != null ? current.getMessage() : throwable.getMessage();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
