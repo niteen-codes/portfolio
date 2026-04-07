@@ -1,6 +1,16 @@
 package com.portfolio.com;
 
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(originPatterns = {
         "http://localhost:*",
@@ -10,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/contact")
 public class ContactController {
+    private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
 
     private final EmailService emailService;
 
@@ -18,8 +29,23 @@ public class ContactController {
     }
 
     @PostMapping("/send-email")
-    public String sendEmail(@RequestBody ContactRequest request) {
-        emailService.sendEmail(request);
-        return "Email sent successfully!";
+    public ResponseEntity<Map<String, String>> sendEmail(@Valid @RequestBody ContactRequest request) {
+        try {
+            emailService.sendEmail(request);
+            return ResponseEntity.ok(Map.of("message", "Email sent successfully!"));
+        } catch (IllegalStateException exception) {
+            logger.error("Contact form email failed for sender {}: {}", request.getEmail(), exception.getMessage());
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                    .body(Map.of("message", "Email service is temporarily unavailable. Please try again shortly."));
+        }
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException exception) {
+        Map<String, String> errors = new HashMap<>();
+        for (FieldError error : exception.getBindingResult().getFieldErrors()) {
+            errors.put(error.getField(), error.getDefaultMessage());
+        }
+        return ResponseEntity.badRequest().body(errors);
     }
 }

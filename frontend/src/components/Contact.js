@@ -83,9 +83,18 @@ const Contact = () => {
         setStatus({ type: "success", text: "Message sent successfully. I will get back to you soon." });
         setFormData({ name: "", email: "", mobile: "", message: "" });
       } else {
+        let errorMessage = "Failed to send message. Please try again.";
+        try {
+          const payload = await response.json();
+          if (payload?.message) {
+            errorMessage = payload.message;
+          }
+        } catch (parseError) {
+          // Keep generic fallback when response body is not JSON.
+        }
         setAnimationType("error");
         setShowAnimation(true);
-        setStatus({ type: "error", text: "Failed to send message. Please try again." });
+        setStatus({ type: "error", text: errorMessage });
       }
     } catch (error) {
       setAnimationType("error");
@@ -213,9 +222,9 @@ const Contact = () => {
             {
               icon: "\u{1F4E7}",
               label: "Email",
-              href: "mailto:touristdestiantion@gmail.com",
+              href: "mailto:niteenjha190@gmail.com",
               text: "Get in touch",
-              detail: "touristdestiantion@gmail.com",
+              detail: "niteenjha190@gmail.com",
             },
             {
               icon: "\u{1F4BC}",

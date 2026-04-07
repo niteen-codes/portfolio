@@ -88,7 +88,7 @@ const Skills = () => {
     },
     {
       name: "Git",
-      logo: "https://cdn-icons-png.flaticon.com/512/11104/11104671.png",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
       description: "Distributed version control system for tracking code changes.",
       category: "Tools",
     },

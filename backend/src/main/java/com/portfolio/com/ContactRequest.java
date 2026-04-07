@@ -1,10 +1,25 @@
 package com.portfolio.com;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 public class ContactRequest {
-    public String name;
-    public String email;
-    public String mobile;
-    public String message;
+
+	@NotBlank(message = "Name is required")
+    private String name;
+
+	@NotBlank(message = "Email is required")
+	@Email(message = "Email is invalid")
+    private String email;
+
+	@NotBlank(message = "Mobile is required")
+	@Pattern(regexp = "^[0-9]{10}$", message = "Mobile must be a valid 10-digit number")
+    private String mobile;
+
+	@NotBlank(message = "Message is required")
+    private String message;
+
 	public String getName() {
 		return name;
 	}
@@ -29,7 +44,4 @@ public class ContactRequest {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-    
-    
 }
-
