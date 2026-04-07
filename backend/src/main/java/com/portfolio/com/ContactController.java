@@ -15,7 +15,8 @@ import java.util.Map;
 @CrossOrigin(originPatterns = {
         "http://localhost:*",
         "http://127.0.0.1:*",
-        "https://portfolio-orcin-xi-44.vercel.app"
+        "https://portfolio-orcin-xi-44.vercel.app",
+        "https://*.vercel.app"
 })
 @RestController
 @RequestMapping("/contact")
@@ -28,6 +29,11 @@ public class ContactController {
         this.emailService = emailService;
     }
 
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, String>> health() {
+        return ResponseEntity.ok(Map.of("status", "ok"));
+    }
+
     @PostMapping("/send-email")
     public ResponseEntity<Map<String, String>> sendEmail(@Valid @RequestBody ContactRequest request) {
         try {
@@ -37,7 +43,7 @@ public class ContactController {
             String reason = extractRootCauseMessage(exception);
             logger.error("Contact form email failed for sender {}: {}", request.getEmail(), reason);
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                    .body(Map.of("message", "Email service is temporarily unavailable: " + reason));
+                    .body(Map.of("message", "Email service is temporarily unavailable. Please try again or email me directly at niteenjha190@gmail.com"));
         }
     }
 
