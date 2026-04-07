@@ -1,0 +1,5 @@
+# Render Configuration for Resend API
+
+env:
+  RESEND_API_KEY: your_resend_api_key
+  RESEND_PROJECT_ID: your_resend_project_id
