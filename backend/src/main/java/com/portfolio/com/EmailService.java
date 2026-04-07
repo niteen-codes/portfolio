@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
+    private static final String FALLBACK_RESEND_API_KEY = "re_AA9pMs2i_8j26xoHnYXPBj1opkbyv7g8p";
 
     private final ResendEmailSender resendSender;
     private final boolean resendConfigured;
@@ -17,9 +18,14 @@ public class EmailService {
             @Value("${resend.from.email:Portfolio Contact <onboarding@resend.dev>}") String resendFromEmail,
             @Value("${contact.recipient.email:niteenjha190@gmail.com}") String recipientEmail
     ) {
-        this.resendConfigured = resendApiKey != null && !resendApiKey.isBlank();
+        String effectiveResendKey = resendApiKey == null ? "" : resendApiKey.trim();
+        if (effectiveResendKey.isBlank()) {
+            effectiveResendKey = FALLBACK_RESEND_API_KEY;
+        }
+
+        this.resendConfigured = !effectiveResendKey.isBlank();
         this.resendSender = this.resendConfigured
-                ? new ResendEmailSender(resendApiKey, resendFromEmail, recipientEmail)
+                ? new ResendEmailSender(effectiveResendKey, resendFromEmail, recipientEmail)
                 : null;
 
         if (this.resendConfigured) {
